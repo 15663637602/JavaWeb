@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.UserMapper">
+<sql id="seq_u_user_table">seq_u_user.nextval</sql>
+<sql id="seq_b_user_table">seq_b_user.nextval</sql>
+<!-- 前台操作 -->
+	<!-- 验证登陆 -->
+	<select id="Login" parameterType="com.neu.entity.UserInfo"
+	resultType="com.neu.entity.UserInfo">
+		select * from u_user where u_name=#{u_name} and u_pass=#{u_pass}
+	</select>
+<!-- 后台操作 -->
+<!-- 验证登陆(身份) -->
+    <select id="B_Login" parameterType="com.neu.entity.B_UserInfo"
+	resultType="String">
+		select b_status from b_user where b_name=#{b_name} and b_pass=#{b_pass}
+	</select>
+    <!-- 查询所有管理员 -->
+	<select id="getAllAdmin" resultType="com.neu.entity.B_UserInfo">
+	 select * from b_user
+	</select>
+	<!-- 自增ID -->
+    <select id="selectID" resultType="Integer">
+		select nextval('userid')
+	</select>
+    <!-- 自增管理员 -->
+    <insert id="insertAdmin" parameterType="com.neu.entity.B_UserInfo">
+		insert into b_user(b_id,b_name,b_pass,b_status) values(#{b_id},#{b_name},#{b_pass},#{b_status})
+	</insert>
+	<!-- 验证管理员名是否重复 -->
+	<select id="validateAdmin" parameterType="com.neu.entity.B_UserInfo"
+	resultType="com.neu.entity.B_UserInfo">
+		select * from b_user where b_name=#{b_name}
+	</select>
+    <!-- 更新管理员 -->
+	<update id="updateAdminInfo"  parameterType="com.neu.entity.B_UserInfo">
+	update b_user set b_pass=#{b_pass},b_status=#{b_status}  where b_name=#{b_name}
+    </update>
+    <!-- 删除管理员-->
+	<delete id="delAdminByName" parameterType="String">
+		delete from b_user where b_name=#{b_name}
+	</delete>
+    <!-- 查询所有就业推荐 -->
+	<select id="selectAllRec" resultType="com.neu.entity.RecommendInfo">
+	 select * from recommend
+	</select>
+	<!-- 自增Rec -->
+    <insert id="insertRec" parameterType="com.neu.entity.RecommendInfo">
+		insert into recommend(rec_id,rec_title,rec_link) values(#{rec_id},#{rec_title},#{rec_link})
+	</insert>
+	<!-- 删除Rec-->
+	<delete id="deleteRec" parameterType="int">
+		delete from recommend where rec_id=#{rec_id}
+	</delete>
+	<!-- 根据title查询Rec -->
+	 <select id="getRecByTitle" parameterType="String" resultType="com.neu.entity.RecommendInfo">
+	 select * from recommend where rec_title LIKE "%"#{rec_title}"%"
+	 </select>
+	 <!-- 查询所有就业资讯 -->
+	<select id="selectAllInf" resultType="com.neu.entity.InformationInfo">
+	 select * from information
+	</select>
+	<!-- 自增Inf -->
+    <insert id="insertInf" parameterType="com.neu.entity.InformationInfo">
+		insert into information(in_id,in_title,in_link) values(#{in_id},#{in_title},#{in_link})
+	</insert>
+	<!-- 删除inf-->
+	<delete id="deleteInf" parameterType="int">
+		delete from information where in_id=#{in_id}
+	</delete>
+	<!-- 根据title查询Inf -->
+	 <select id="getInfByTitle" parameterType="String" resultType="com.neu.entity.InformationInfo">
+	 select * from information where in_title LIKE "%"#{in_title}"%"
+	 </select>
+	 <!-- 获得adinfo-->
+	 <select id="selectAllfif" resultType="com.neu.entity.FadInfo">
+	 select * from front_ad
+	 </select>
+	 <!-- 获得adinfoById-->
+	 <select id="selectAdById" parameterType="int" resultType="com.neu.entity.FadInfo">
+	 select * from front_ad where fa_id=#{fa_id}
+	 </select>
+	 <!-- 更新Ad -->
+	<update id="updateAdByemail"  parameterType="com.neu.entity.FadInfo">
+	update front_ad set fa_name=#{fa_name},fa_image=#{fa_image},fa_image2=#{fa_image2},fa_h_email=#{fa_h_email}  where fa_id=#{fa_id}
+    </update>
+    <!-- 获得badinfo-->
+	 <select id="selectAllbif" resultType="com.neu.entity.BadInfo">
+	 select * from back_ad
+	 </select>
+
+<!-- 获得badinfoById-->
+	 <select id="selectBAdById" parameterType="int" resultType="com.neu.entity.BadInfo">
+	 select * from back_ad where ba_id=#{ba_id}
+	 </select>
+	 <!-- 更新BAd -->
+	<update id="updateBAD"  parameterType="com.neu.entity.BadInfo">
+	update back_ad set ba_name=#{ba_name},ba_descr=#{ba_descr},ba_image=#{ba_image},ba_h_email=#{ba_h_email}  where ba_id=#{ba_id}
+    </update>
+</mapper>

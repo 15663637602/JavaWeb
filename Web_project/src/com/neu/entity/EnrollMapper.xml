@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.EnrollMapper">
+    <!-- 查询所有信息 -->
+	<select id="getAllEnroll" resultType="com.neu.entity.EnrollInfo">
+	 select * from enroll
+	</select>
+	<!-- 根据学号查询信息 -->
+	 <select id="getEnrollByNo" parameterType="String" resultType="com.neu.entity.EnrollInfo">
+	 select * from enroll where stu_id=#{stu_id}
+	 </select>
+	 <!-- 删除信息-->
+	<delete id="delEnrollByNo" parameterType="String">
+		delete from enroll where stu_id=#{stu_id}
+	</delete>
+	<!-- 根据学号查询信息 -->
+	 <select id="fselectEnroll" parameterType="com.neu.entity.EnrollInfo" resultType="com.neu.entity.EnrollInfo">
+	 select * from enroll where stu_id=#{stu_id}
+	 </select>
+	 <!-- 自增Enroll -->
+    <insert id="finsertEnroll" parameterType="com.neu.entity.EnrollInfo">
+    insert into enroll(e_id,stu_id,e_company,e_position,e_location,e_salary,e_name) values(#{e_id},#{stu_id},#{e_company},#{e_position},#{e_location},#{e_salary},#{e_name})
+    </insert>
+    <!-- 更新Enroll -->
+	<update id="fupdateEnroll"  parameterType="com.neu.entity.EnrollInfo">
+	update enroll set e_company=#{e_company},e_position=#{e_position},e_location=#{e_location},e_salary=#{e_salary},e_name=#{e_name}  where stu_id=#{stu_id}
+    </update>
+</mapper>

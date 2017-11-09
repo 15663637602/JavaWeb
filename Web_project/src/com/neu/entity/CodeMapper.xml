@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.CodeMapper">
+	<!-- 查询所有注册码信息 -->
+	 <select id="getAllCode" resultType="com.neu.entity.RegisterCode">
+	 select * from register_code
+	 </select>
+	 <!-- 根据学号查询信息 -->
+	 <select id="getCodeByNo" parameterType="String" resultType="com.neu.entity.RegisterCode">
+	 select * from register_code where rc_no=#{rc_no}
+	 </select>
+	 <!-- 验证学号是否重复 -->
+	<select id="validateNo" parameterType="com.neu.entity.RegisterCode"
+	resultType="com.neu.entity.RegisterCode">
+		select * from register_code where rc_no=#{rc_no}
+	</select>
+	<!-- 验证注册码是否重复 -->
+	<select id="validateCode" parameterType="com.neu.entity.RegisterCode"
+	resultType="com.neu.entity.RegisterCode">
+		select * from register_code where rc_code=#{rc_code}
+	</select>
+	<!-- 自增ID -->
+    <select id="selectID" resultType="Integer">
+		select nextval('userid')
+	</select>
+	<!-- 自增信息 -->
+    <insert id="insertCode" parameterType="com.neu.entity.RegisterCode">
+		insert into register_code(rc_id,rc_name,rc_no,rc_code,rc_college) values(#{rc_id},#{rc_name},#{rc_no},#{rc_code},#{rc_college})
+	</insert>
+	<!-- 删除信息-->
+	<delete id="delCodeById" parameterType="String">
+		delete from register_code where rc_no=#{rc_no}
+	</delete>
+	<!-- 批量删除-->
+	<delete id="delCodeByID" parameterType="Integer">
+		delete from register_code where rc_id=#{rc_id}
+	</delete>
+	<!-- 更新信息 -->
+	<update id="updateCodeInfo"  parameterType="com.neu.entity.RegisterCode">
+	update register_code set rc_no=#{rc_no},rc_name=#{rc_name},rc_code=#{rc_code},rc_college=#{rc_college}  where rc_id=#{rc_id}
+    </update>
+</mapper>

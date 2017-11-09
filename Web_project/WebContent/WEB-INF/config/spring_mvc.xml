@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+<!-- 注解的自动加载 -->
+<context:component-scan base-package="com.neu.controller"/>
+<context:component-scan base-package="com.neu.dao"/>
+<mvc:annotation-driven />  
+	
+<!--视图映射的配置 -->
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<!--指定处理视图的视图类： JstlView（专门处理jsp+jstl） -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<!--指定处理视图的前缀：/（当前应用的根目录） -->
+		<property name="prefix" value="/"></property>
+		<!--指定处理视图的后缀：.jsp（后缀是jsp的文件） -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+
+<!-- 文件上传的配置 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="104857600" />
+		<property name="maxInMemorySize" value="4096" />
+	</bean>
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.TagMapper">
+<!-- 前台操作 -->
+	<!-- 查询所有信息-->
+	<select id="selectTag" parameterType="com.neu.entity.TagInfo"
+	resultType="com.neu.entity.TagInfo">
+		select * from ctag where ctag_id=#{ctag_id}
+	</select>
+	<!-- 自增Tag -->
+    <insert id="insertTag" parameterType="com.neu.entity.TagInfo">
+		insert into ctag(ct_id,ctag_id,ctag_content) values(#{ct_id},#{ctag_id},'添加您公司的优点及好处')
+	</insert>
+	<!-- 添加Tag -->
+    <insert id="insertsTag" parameterType="com.neu.entity.TagInfo">
+		insert into ctag(ct_id,ctag_id,ctag_content) values(#{ct_id},#{ctag_id},#{ctag_content})
+	</insert>
+    <!-- 删除Tag -->
+	<delete id="delTag" parameterType="Integer">
+		delete from ctag where ct_id=#{ct_id}
+	</delete>
+</mapper>

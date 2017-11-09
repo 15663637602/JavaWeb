@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.StudentMapper">
+<!-- 前台操作 -->
+	<!-- 验证学生登陆 -->
+	<select id="stu_Login" parameterType="com.neu.entity.StudentInfo"
+	resultType="com.neu.entity.StudentInfo">
+		select * from student where stu_id=#{stu_id} and stu_password=#{stu_password}
+	</select>
+	<!-- 找回密码 -->
+	<select id="getPassBycode" parameterType="String"
+	resultType="String">
+		select stu_password from student where rc_code=#{rc_code}
+	</select>
+	<!-- 验证注册码 -->
+	<select id="validateCode" parameterType="com.neu.entity.RegisterCode"
+	resultType="com.neu.entity.RegisterCode">
+		select * from register_code where rc_code=#{rc_code}
+	</select>
+	<!-- 验证学号-->
+	<select id="validateNo" parameterType="com.neu.entity.RegisterCode"
+	resultType="com.neu.entity.RegisterCode">
+		select * from register_code where rc_code=#{rc_code} and rc_no=#{rc_no}
+	</select>
+	<!-- 验证学号是否已被注册-->
+	<select id="validateNo2" parameterType="com.neu.entity.StudentInfo"
+	resultType="com.neu.entity.StudentInfo">
+		select * from student where stu_id=#{stu_id}
+	</select>
+	<!-- 自增ID -->
+    <select id="selectID" resultType="Integer">
+		select nextval('userid')
+	</select>
+	<!-- 自增学生 -->
+    <insert id="insertStu" parameterType="com.neu.entity.StudentInfo">
+		insert into student(s_id,stu_id,stu_password,rc_code,stu_jianli_title,stu_name,stu_sex,stu_college,stu_tel,stu_email,date,stu_exp_city,stu_work_name,stu_inter_name,stu_undergraduate_name,stu_descr,stu_resumeScore,stu_profile) values(#{s_id},#{stu_id},#{stu_password},#{rc_code},'制定你的简历标题','姓名','性别','学位','联系电话','邮箱地址',#{date},'期望城市','公司名称','项目名称','学校名称','自我描述','0','style/images/default_headpic.png')
+	</insert>
+	<!-- 查询学生所有信息-->
+	<select id="selectInfoByNo" parameterType="com.neu.entity.StudentInfo"
+	resultType="com.neu.entity.StudentInfo">
+		select * from student where stu_id=#{stu_id}
+	</select>
+	<!-- 更新简历标题 -->
+	<update id="updateRNByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_jianli_title=#{stu_jianli_title},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新基本信息 -->
+	<update id="updateBasicByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_name=#{stu_name},stu_sex=#{stu_sex},stu_college=#{stu_college},stu_tel=#{stu_tel},stu_email=#{stu_email},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新期望信息 -->
+	<update id="updateExpByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_exp_city=#{stu_exp_city},stu_exp_pos=#{stu_exp_pos},stu_exp_type=#{stu_exp_type},stu_exp_salary=#{stu_exp_salary},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateExpByNos"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_exp_city=#{stu_exp_city},stu_resumeScore=#{stu_resumeScore},stu_exp_pos=#{stu_exp_pos},stu_exp_type=#{stu_exp_type},stu_exp_salary=#{stu_exp_salary},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新经历信息 -->
+	<update id="updateExperienceByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_work_name=#{stu_work_name},stu_work_pos=#{stu_work_pos},stu_work_sta_y=#{stu_work_sta_y},stu_work_sta_m=#{stu_work_sta_m},stu_work_end_y=#{stu_work_end_y},stu_work_end_m=#{stu_work_end_m},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateExperienceByNos"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_work_name=#{stu_work_name},stu_resumeScore=#{stu_resumeScore},stu_work_pos=#{stu_work_pos},stu_work_sta_y=#{stu_work_sta_y},stu_work_sta_m=#{stu_work_sta_m},stu_work_end_y=#{stu_work_end_y},stu_work_end_m=#{stu_work_end_m},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新项目信息 -->
+	<update id="updateProjectByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_inter_name=#{stu_inter_name},stu_inter_pos=#{stu_inter_pos},stu_inter_sta_y=#{stu_inter_sta_y},stu_inter_sta_m=#{stu_inter_sta_m},stu_inter_end_y=#{stu_inter_end_y},stu_inter_end_m=#{stu_inter_end_m},stu_inter_descr=#{stu_inter_descr},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateProjectByNos"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_inter_name=#{stu_inter_name},stu_resumeScore=#{stu_resumeScore},stu_inter_pos=#{stu_inter_pos},stu_inter_sta_y=#{stu_inter_sta_y},stu_inter_sta_m=#{stu_inter_sta_m},stu_inter_end_y=#{stu_inter_end_y},stu_inter_end_m=#{stu_inter_end_m},stu_inter_descr=#{stu_inter_descr},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新学历信息 -->
+	<update id="updateEduByDoc"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},stu_master_name=#{stu_master_name},stu_master_major=#{stu_master_major},stu_master_sta=#{stu_master_sta},stu_master_end=#{stu_master_end},stu_doctor_name=#{stu_doctor_name},stu_doctor_major=#{stu_doctor_major},stu_doctor_sta=#{stu_doctor_sta},stu_doctor_end=#{stu_doctor_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateEduByMas"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},stu_master_name=#{stu_master_name},stu_master_major=#{stu_master_major},stu_master_sta=#{stu_master_sta},stu_master_end=#{stu_master_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateEduByUnd"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateEduByDocs"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_resumeScore=#{stu_resumeScore},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},stu_master_name=#{stu_master_name},stu_master_major=#{stu_master_major},stu_master_sta=#{stu_master_sta},stu_master_end=#{stu_master_end},stu_doctor_name=#{stu_doctor_name},stu_doctor_major=#{stu_doctor_major},stu_doctor_sta=#{stu_doctor_sta},stu_doctor_end=#{stu_doctor_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateEduByMass"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_resumeScore=#{stu_resumeScore},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},stu_master_name=#{stu_master_name},stu_master_major=#{stu_master_major},stu_master_sta=#{stu_master_sta},stu_master_end=#{stu_master_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateEduByUnds"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_undergraduate_name=#{stu_undergraduate_name},stu_resumeScore=#{stu_resumeScore},stu_undergraduate_major=#{stu_undergraduate_major},stu_undergraduate_sta=#{stu_undergraduate_sta},stu_undergraduate_end=#{stu_undergraduate_end},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新自我描述 -->
+	<update id="updateDescrByNo"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_descr=#{stu_descr},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <update id="updateDescrByNos"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_descr=#{stu_descr},stu_resumeScore=#{stu_resumeScore},date=#{date}  where stu_id=#{stu_id}
+    </update>
+    <!-- 查询score-->
+	<select id="selectScore" parameterType="String"
+	resultType="Integer">
+		select stu_resumeScore from student where stu_id=#{stu_id}
+	</select>
+	<!-- 更新头像 -->
+	<update id="updateProfile"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_profile=#{stu_profile}  where stu_id=#{stu_id}
+    </update>
+    <!-- 更新密码 -->
+	<update id="updatePass"  parameterType="com.neu.entity.StudentInfo">
+	update student set stu_password=#{stu_password}  where stu_id=#{stu_id}  
+    </update>
+    <!-- 查询所有position -->
+	<select id="getAllPos" resultType="com.neu.entity.PositionInfo">
+	 select * from position order by p_order desc limit 0,5 
+	</select>
+	<!-- 查询position -->
+	<select id="getPos" resultType="com.neu.entity.PositionInfo">
+	 select * from position where p_name LIKE "%"#{p_name}"%" or p_fields LIKE "%"#{p_name}"%" or p_field LIKE "%"#{p_name}"%" order by p_order desc limit 0,5 
+	</select>
+	<!-- 查询nextposition -->
+	<select id="getnPos" resultType="com.neu.entity.PositionInfo">
+	 select * from position where p_name LIKE "%"#{p_name}"%" or p_fields LIKE "%"#{p_name}"%" or p_field LIKE "%"#{p_name}"%" order by p_order desc limit #{begin},#{end} 
+	</select>
+	<!-- 查询position2 -->
+	<select id="getPoss"  parameterType="com.neu.entity.StudentInfo" resultType="com.neu.entity.PositionInfo">
+	 select * from position where p_loc LIKE "%"#{p_loc}"%" and (p_name LIKE "%"#{p_name}"%" or p_fields LIKE "%"#{p_name}"%" or p_field LIKE "%"#{p_name}"%") order by p_order desc limit 0,5 
+	</select>
+	<!-- 查询nextposition2 -->
+	<select id="getnPoss"  parameterType="com.neu.entity.StudentInfo" resultType="com.neu.entity.PositionInfo">
+	 select * from position where p_loc LIKE "%"#{p_loc}"%" and (p_name LIKE "%"#{p_name}"%" or p_fields LIKE "%"#{p_name}"%" or p_field LIKE "%"#{p_name}"%") order by p_order desc limit #{begin},#{end} 
+	</select>
+	<!-- 插入delivery -->
+    <insert id="insertDelivery" parameterType="com.neu.entity.DeliveryInfo">
+		insert into delivery(d_id,stu_id,p_id,h_email,status,date,p_name,p_low_salary,p_high_salary,p_company,p_loc,stu_name,stu_sex,stu_college,stu_exp_city,stu_exp_pos,stu_tel,stu_email,stu_jianli_title,stu_profile,message) values(#{d_id},#{stu_id},#{p_id},#{h_email},'投递成功',#{date},#{p_name},#{p_low_salary},#{p_high_salary},#{p_company},#{p_loc},#{stu_name},#{stu_sex},#{stu_college},#{stu_exp_city},#{stu_exp_pos},#{stu_tel},#{stu_email},#{stu_jianli_title},#{stu_profile},'还未得到反馈')
+	</insert>
+	 <!-- 查询positionById -->
+	<select id="getPosById" parameterType="int" resultType="com.neu.entity.PositionInfo">
+	 select * from position where p_id=#{p_id}
+	</select>
+	 <!-- 查询delivery -->
+	<select id="getDelivery" parameterType="String" resultType="com.neu.entity.DeliveryInfo">
+	 select * from delivery where stu_id=#{stu_id}
+	</select>
+	<!-- 查询susdelivery -->
+	<select id="getsusDelivery" parameterType="String" resultType="com.neu.entity.DeliveryInfo">
+	 select * from delivery where stu_id=#{stu_id} 
+	</select>
+	<!-- 查询donedelivery -->
+	<select id="getdoneDelivery" parameterType="String" resultType="com.neu.entity.DeliveryInfo">
+	 select * from delivery where stu_id=#{stu_id} and status='通知面试'
+	</select>
+	<!-- 查询undelivery -->
+	<select id="getunDelivery" parameterType="String" resultType="com.neu.entity.DeliveryInfo">
+	 select * from delivery where stu_id=#{stu_id} and status='不合适'
+	</select>
+	<!-- getStuById -->
+	<select id="getStuById" parameterType="String" resultType="com.neu.entity.StudentInfo">
+	 select * from student where stu_id=#{stu_id} 
+	</select>
+	<!-- getFAD -->
+	<select id="getFAD"  resultType="com.neu.entity.FadInfo">
+	 select * from front_ad 
+	</select>
+	<!-- getBAD -->
+	<select id="getBAD"  resultType="com.neu.entity.BadInfo">
+	 select * from back_ad 
+	</select>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.entity.HRMapper">
+<!-- 前台操作 -->
+	<!-- 验证hr登陆 -->
+	<select id="hr_Login" parameterType="com.neu.entity.HrInfo"
+	resultType="com.neu.entity.HrInfo">
+		select * from hr where h_email=#{h_email} and h_password=#{h_password}
+	</select>
+	<!-- 找回密码-->
+	<select id="retrievePass" parameterType="com.neu.entity.HrInfo"
+	resultType="String">
+		select h_password from hr where h_email=#{h_email}
+	</select>
+	<!-- 查询所有信息-->
+	<select id="selectInfoByNo" parameterType="com.neu.entity.HrInfo"
+	resultType="com.neu.entity.HrInfo">
+		select * from hr where h_email=#{h_email}
+	</select>
+	<!-- 更新公司名称 -->
+	<update id="updateCTByNo"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_name=#{c_name},c_title=#{c_title}  where h_email=#{h_email}
+    </update>
+    <!-- 更新公司产品 -->
+	<update id="updatePro"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_pro_name=#{c_pro_name},c_pro_content=#{c_pro_content}  where h_email=#{h_email}
+    </update>
+    <!-- 更新公司介绍 -->
+	<update id="updateIntr"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_introduction=#{c_introduction}  where h_email=#{h_email}
+    </update>
+    <!-- 更新公司基本信息 -->
+	<update id="updateBas"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_loc=#{c_loc},c_type=#{c_type},c_population=#{c_population},c_website=#{c_website}  where h_email=#{h_email}
+    </update>
+    <!-- 更新公司基本信息 -->
+	<update id="updatefinance"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_fin_name=#{c_fin_name},c_fin_stage=#{c_fin_stage}  where h_email=#{h_email}
+    </update>
+    <!-- 更新联系人信息 -->
+	<update id="updateContact"  parameterType="com.neu.entity.HrInfo">
+	update hr set c_con_name=#{c_con_name},c_con_cont=#{c_con_cont}  where h_email=#{h_email}
+    </update>
+    <!-- 自增HR -->
+    <insert id="insertHr" parameterType="com.neu.entity.HrInfo">
+		insert into hr(h_id,h_email,h_password,c_name,c_title,c_loc,c_type,c_population,c_website,c_fin_stage,c_fin_name,c_pro_name,c_pro_content,c_introduction,c_con_name,auth,logo) values(#{h_id},#{h_email},#{h_password},'请填写您的公司名称','一句话描述公司优势,核心价值','公司总部地点','运营领域','员工人数','网址','融资阶段','机构全称','产品名称','酒香不怕巷子深已经过时啦！把自己优秀的产品展示出来吸引人才围观吧！','详细公司的发展历程、让求职者更加了解你!','请填写联系人资料','未认证','/Web_project/upload/logo_default.png')
+	</insert>
+	<!-- 验证邮箱-->
+	<select id="validateEmail" parameterType="com.neu.entity.HrInfo"
+	resultType="com.neu.entity.HrInfo">
+		select * from hr where h_email=#{h_email}
+	</select>
+	<!-- 发布职位 -->
+    <insert id="createJob" parameterType="com.neu.entity.PositionInfo">
+		insert into position (p_id,h_email,p_field,p_name,p_type,p_low_salary,p_high_salary,p_loc,p_degree,p_charm,p_descr,p_demand,p_contact,date,p_fields,p_stage,p_pop,p_company,p_order) values(#{p_id},#{h_email},#{p_field},#{p_name},#{p_type},#{p_low_salary},#{p_high_salary},#{p_loc},#{p_degree},#{p_charm},#{p_descr},#{p_demand},#{p_contact},#{date},#{p_fields},#{p_stage},#{p_pop},#{p_company},'0')
+	</insert>
+	<!-- 查询有效职位信息-->
+	<select id="selectPosition" parameterType="com.neu.entity.PositionInfo"
+	resultType="com.neu.entity.PositionInfo">
+		select * from position where h_email=#{h_email}
+	</select>
+	<!-- 查询单个职位信息-->
+	<select id="selectsPosition" parameterType="com.neu.entity.PositionInfo"
+	resultType="com.neu.entity.PositionInfo">
+		select * from position where p_id=#{p_id}
+	</select>
+	<!-- 查询企业所有职位信息-->
+	<select id="seletposByHemail" parameterType="String"
+	resultType="com.neu.entity.PositionInfo">
+		select * from position where h_email=#{h_email}
+	</select>
+	<!-- 编辑职位 -->
+    <update id="updateJob" parameterType="com.neu.entity.PositionInfo">
+		update  position set h_email=#{h_email},p_field=#{p_field},p_name=#{p_name},p_type=#{p_type},p_low_salary=#{p_low_salary},p_high_salary=#{p_high_salary},p_loc=#{p_loc},p_degree=#{p_degree},p_charm=#{p_charm},p_descr=#{p_descr},p_demand=#{p_demand},p_contact=#{p_contact} where p_id=#{p_id}
+	</update>
+	<!-- 删除职位 -->
+	<delete id="deleteJob" parameterType="com.neu.entity.PositionInfo">
+		delete from position where p_id=#{p_id}
+	</delete>
+	<!-- 查询所有公司信息 -->
+	<select id="getAllCompany" resultType="com.neu.entity.HrInfo">
+	 select * from hr
+	</select>
+	<!-- 小窗查看信息-->
+	<select id="selectInfoById" parameterType="com.neu.entity.HrInfo"
+	resultType="com.neu.entity.HrInfo">
+		select * from hr where h_id=#{h_id}
+	</select>
+	<!-- 更新公司logo -->
+	<update id="updateProfile"  parameterType="com.neu.entity.HrInfo">
+	update hr set logo=#{logo}  where h_email=#{h_email}
+    </update>
+    <!-- 公司认证证书 -->
+	<update id="updateAuthImage"  parameterType="com.neu.entity.HrInfo">
+	update hr set auth_image=#{auth_image}  where h_email=#{h_email}
+    </update>
+    <!-- 更新hr密码 -->
+	<update id="updatePass"  parameterType="com.neu.entity.HrInfo">
+	update hr set h_password=#{h_password}  where h_email=#{h_email}
+    </update>
+    <!-- permit -->
+	<update id="permit"  parameterType="com.neu.entity.HrInfo">
+	update hr set auth='认证通过'  where h_email=#{h_email}
+    </update>
+    <!-- deny -->
+	<update id="deny"  parameterType="com.neu.entity.HrInfo">
+	update hr set auth='认证未通过'  where h_email=#{h_email}
+    </update>
+    <!-- 根据名称查询公司 -->
+	 <select id="getComByName" parameterType="String" resultType="com.neu.entity.HrInfo">
+	 select * from hr where c_name LIKE "%"#{c_name}"%"
+	 </select>
+	 <!-- 查询所有未认证公司信息 -->
+	<select id="getAllUnCompany" resultType="com.neu.entity.HrInfo">
+	 select * from hr where auth='未认证'
+	</select>
+	<!-- 查询未认证公司信息 -->
+	<select id="getUnComByName" resultType="com.neu.entity.HrInfo">
+	 select * from hr where auth='未认证' and c_name LIKE "%"#{c_name}"%"
+	</select>
+	<!-- Hr浏览收到简历-->
+	<select id="getDelivery" parameterType="String"
+	resultType="com.neu.entity.DeliveryInfo">
+		select * from delivery where h_email=#{h_email} and status='投递成功'
+	</select>
+	<select id="getOnDelivery" parameterType="String"
+	resultType="com.neu.entity.DeliveryInfo">
+		select * from delivery where h_email=#{h_email} and status='通知面试'
+	</select>
+	<select id="getUnDelivery" parameterType="String"
+	resultType="com.neu.entity.DeliveryInfo">
+		select * from delivery where h_email=#{h_email} and status='不合适'
+	</select>
+	<!-- pass -->
+	<update id="passdelivery"  parameterType="com.neu.entity.DeliveryInfo">
+	update delivery set status ='不合适',message=#{message}  where d_id=#{d_id}
+    </update>
+    <!-- done -->
+	<update id="donedelivery"  parameterType="com.neu.entity.DeliveryInfo">
+	update delivery set status ='通知面试',message=#{message}  where d_id=#{d_id}
+    </update>
+    <!-- addorder -->
+	<update id="addorder"  parameterType="com.neu.entity.PositionInfo">
+	update position set p_order=#{p_order}  where p_id=#{p_id}
+    </update>
+</mapper>
